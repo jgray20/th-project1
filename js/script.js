@@ -8,12 +8,13 @@ project 1 - A Random Quote Generator
   // Reach out in your Slack community - https://treehouse-fsjs-102.slack.com/app_redirect?channel=chit-chat
 
 /*** 
- * `quotes` array 
+ * Array of 5 quotes 
 ***/
 let quotes = [
   {
     quote: "Design is intelligence made visible.",
-    source: "Alina Wheeler"
+    source: "Alina Wheeler",
+    category: "Inspiration"
   },
   {
     quote: "So many books, so little time.",
@@ -26,7 +27,8 @@ let quotes = [
   },
   {
     quote:"I'm not superstitious, but I am a little stitious.",
-    source:"Michael Scott"
+    source:"Michael Scott",
+    category: "Humor"
   },
   {
     quote:"It does not do to dwell on dreams and forget to live.",
@@ -38,7 +40,7 @@ let quotes = [
 
 
 /***
- * `getRandomQuote` function
+ * Function to generate a random quote
 ***/
 
 function getRandomQuote(arr) {
@@ -47,25 +49,44 @@ function getRandomQuote(arr) {
   return randomQuote;
 }
 
+
+
+
 /***
- * `printQuote` function
+ * Function to display a random quote and background color
 ***/
 
 function printQuote() {
   let generatedQuote = getRandomQuote(quotes);
-  var html = `
-              <p class="quote"> ${generatedQuote.quote} </p>
-              <p class="source"> ${generatedQuote.source}`;
+  let html = `
+                <p class="quote"> ${generatedQuote.quote} </p>
+                <p class="source"> ${generatedQuote.source}
+              `;
               if (generatedQuote.citation) {
                 html += `<span class="citation">${generatedQuote.citation}</span>`;
               }
               if (generatedQuote.year) {
                 html += `<span class="year">${generatedQuote.year}</span>`;
               }
+              if (generatedQuote.category) {
+                html += `<span class="tags">, ${generatedQuote.category}</span>`;
+              }
               html += `</p>`;
-  return html;
+  let color1 = Math.floor( Math.random() * 255 );
+  let color2 = Math.floor( Math.random() * 255 );
+  let color3 = Math.floor( Math.random() * 255 );
+  document.body.style.backgroundColor = `rgb( ${color1}, ${color2}, ${color3} )`; 
+  return document.getElementById('quote-box').innerHTML = html; 
 }
-document.getElementById('quote-box').innerHTML = printQuote();
+printQuote();
+
+/*
+  Interval to change the quote every 10 seconds
+*/
+let quoteInterval = setInterval( printQuote, 10000);
+
+
+
 /***
  * click event listener for the print quote button
  * DO NOT CHANGE THE CODE BELOW!!
